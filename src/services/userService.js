@@ -7,8 +7,11 @@ const getByEmail = ({ email }) => User.findOne({ where: { email } });
 
 const getUsers = () => User.findAll();
 
+const getByUserId = (userId) => User.findByPk(userId);
+
 module.exports = {
     createUser,
     getByEmail,
     getUsers,
+    getByUserId,
 };
