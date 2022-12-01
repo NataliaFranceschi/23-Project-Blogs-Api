@@ -1,5 +1,5 @@
 const userService = require('../services/userService');
-const { createToken, verifyToken } = require('../auth/jwtFunctions');
+const { createToken } = require('../auth/jwtFunctions');
 
 const createUser = async (req, res) => {
     const user = req.body;
@@ -27,13 +27,13 @@ const Login = async (req, res) => {
     return res.status(200).json({ token });
   };
 
-  const getUsers = async (req, res) => {
-    const { authorization } = req.headers;
-    const payload = verifyToken(authorization);
-    if (payload) {
+  const getUsers = async (_req, res) => {
       const users = await userService.getUsers();
-      return res.status(200).json(users);
-    }
+      const usersWithoutPassword = users.map((user) => {
+        const { password: _, ...userWithoutPassword } = user.dataValues;
+        return userWithoutPassword;
+      });
+      return res.status(200).json(usersWithoutPassword);
   };
 
 module.exports = {
