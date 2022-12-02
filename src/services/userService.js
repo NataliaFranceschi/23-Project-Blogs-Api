@@ -5,9 +5,13 @@ const createUser = ({ displayName, email, password, _image }) => User
 
 const getByEmail = ({ email }) => User.findOne({ where: { email } });
 
-const getUsers = () => User.findAll();
+const getUsers = () => User.findAll({
+    attributes: { exclude: ['password'] },
+});
 
-const getByUserId = (userId) => User.findByPk(userId);
+const getByUserId = (userId) => User.findByPk(userId, {
+    attributes: { exclude: ['password'] },
+});
 
 module.exports = {
     createUser,
