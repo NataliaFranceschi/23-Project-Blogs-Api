@@ -8,8 +8,8 @@ const checkCategory = Joi.object({
 });
 
 const validateName = async (req, res, next) => {
-    const user = req.body;
-    const { error } = checkCategory.validate(user);
+    const category = req.body;
+    const { error } = checkCategory.validate(category);
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
     }
