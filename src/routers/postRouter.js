@@ -1,14 +1,15 @@
 const express = require('express');
 const postController = require('../controller/postController');
 const validateToken = require('../middlewares/validateToken');
-const { validate, validateCategoryId } = require('../middlewares/validadePost');
+const { validatePost, validateUpdate,
+   validateCategoryId, validatePostUser } = require('../middlewares/validadePost');
 
 const router = express.Router();
 
 router.post(
   '/',
   validateToken,
-  validate,
+  validatePost,
   validateCategoryId,
   postController.createPost,
 );
@@ -23,6 +24,14 @@ router.get(
   '/:id',
   validateToken,
   postController.getPostById,
+);
+
+router.put(
+  '/:id',
+  validateToken,
+  validatePostUser,
+  validateUpdate,
+  postController.updatePost,
 );
 
 module.exports = router;
