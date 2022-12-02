@@ -21,11 +21,8 @@ const getPosts = async (_req, res) => {
 
 const getPostById = async (req, res) => {
   const { id } = req.params;
-    const post = await postService.getPostById(id);
-    if (post) {
-      return res.status(200).json(post);
-    }
-    return res.status(404).json({ message: 'Post does not exist' });
+  const post = await postService.getPostById(id);
+  return res.status(200).json(post);
 };
 
 const updatePost = async (req, res) => {
@@ -34,8 +31,14 @@ const updatePost = async (req, res) => {
 
   await postService.updatePost(id, title, content);
   const updatedPost = await postService.getPostById(id);
-  
+
   return res.status(200).json(updatedPost);
+};
+
+const deletePost = async (req, res) => {
+  const { id } = req.params;
+  await postService.deletePost(id);
+  return res.status(204).end();
 };
 
 module.exports = {
@@ -43,4 +46,5 @@ module.exports = {
     getPosts,
     getPostById,
     updatePost,
+    deletePost,
 };

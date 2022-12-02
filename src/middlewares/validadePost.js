@@ -50,12 +50,17 @@ const validateCategoryId = async (req, res, next) => {
 };
 
 const validatePostUser = async (req, res, next) => {
-    const { id } = req.user;
-    const verifyUser = await postService.getPostById(id);
-    if (verifyUser.users.id !== id) {
-        return res.status(401).json({ message: 'Unauthorized user' });
+    const userInfo = req.user; 
+    const { id } = req.params;
+    try {
+        const verifyUser = await postService.getPostById(id);
+        if (verifyUser.users.id !== userInfo.id) {
+            return res.status(401).json({ message: 'Unauthorized user' });
+        }
+    } catch (error) {
+        return res.status(404).json({ message: 'Post does not exist' });
     }
-  
+
     next();
 };
 
