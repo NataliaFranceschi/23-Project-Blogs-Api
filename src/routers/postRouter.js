@@ -15,6 +15,12 @@ router.post(
 );
 
 router.get(
+  '/search',
+  validateToken,
+  postController.searchPosts,
+);
+
+router.get(
   '/',
   validateToken,
   postController.getPosts,
