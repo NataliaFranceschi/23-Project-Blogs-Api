@@ -49,12 +49,22 @@ const validateCategoryId = async (req, res, next) => {
     next();
 };
 
+const validatePostId = async (req, res, next) => {
+    const { id } = req.params;
+    const post = await postService.getPostById(id);
+    if (post === null) {
+        return res.status(404).json({ message: 'Post does not exist' });
+    }
+
+    next();
+};
+
 const validatePostUser = async (req, res, next) => {
     const userInfo = req.user; 
     const { id } = req.params;
     try {
         const verifyUser = await postService.getPostById(id);
-        if (verifyUser.users.id !== userInfo.id) {
+        if (verifyUser.user.id !== userInfo.id) {
             return res.status(401).json({ message: 'Unauthorized user' });
         }
     } catch (error) {
@@ -69,4 +79,5 @@ module.exports = {
     validateCategoryId,
     validatePostUser,
     validateUpdate,
+    validatePostId,
 };

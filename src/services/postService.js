@@ -18,7 +18,6 @@ const getPosts = () => {
 
 const getPostById = (postId) => {
     const posts = BlogPost.findByPk(postId, {
-        attributes: { exclude: ['userId'] },
         include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
         { model: Category, as: 'categories', through: { attributes: [] } }],
         
