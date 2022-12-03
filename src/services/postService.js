@@ -9,7 +9,7 @@ const createPostCategory = (array) => PostCategory
 const getPosts = () => {
     const posts = BlogPost.findAll({
         attributes: { exclude: ['userId'] },
-        include: [{ model: User, as: 'users', attributes: { exclude: ['password'] } },
+        include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
         { model: Category, as: 'categories', through: { attributes: [] } }],
         
     });
@@ -19,7 +19,7 @@ const getPosts = () => {
 const getPostById = (postId) => {
     const posts = BlogPost.findByPk(postId, {
         attributes: { exclude: ['userId'] },
-        include: [{ model: User, as: 'users', attributes: { exclude: ['password'] } },
+        include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
         { model: Category, as: 'categories', through: { attributes: [] } }],
         
     });
@@ -51,7 +51,7 @@ const searchPosts = async (q) => {
           content: { [Op.substring]: q },
         }] },
         attributes: { exclude: ['userId'] },
-        include: [{ model: User, as: 'users', attributes: { exclude: ['password'] } },
+        include: [{ model: User, as: 'user', attributes: { exclude: ['password'] } },
         { model: Category, as: 'categories', through: { attributes: [] } }],
       });
     return posts;
