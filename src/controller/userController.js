@@ -41,9 +41,19 @@ const createUser = async (req, res) => {
     return res.status(404).json({ message: 'User does not exist' });
 };
 
+const deleteUser = async (req, res) => {
+  const { param } = req.params;
+  const { id } = req.user;
+  if (param === 'me') {
+  await userService.deleteUser(id);
+  return res.status(204).end();
+  }
+};
+
 module.exports = {
     createUser,
     Login,
     getUsers,
     getByUserId,
+    deleteUser,
 };
